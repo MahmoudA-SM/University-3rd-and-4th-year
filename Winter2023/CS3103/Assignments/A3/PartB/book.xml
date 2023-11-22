@@ -1,0 +1,15 @@
+<book xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="https://cs3103.cs.unb.ca/mmoustaf/a3/Book.xsd">
+
+<Title>Atomic Habits</Title>
+<Author>James Clear</Author>
+<Edition>1st Edition</Edition>
+<Discipline>Self-help</Discipline>
+<Publisher>Penguin Publishing Group</Publisher>
+<Seller_Contact>
+    <Email>canadaweb@penguinrandomhouse.com</Email>
+</Seller_Contact>
+<Image src="https://images.randomhouse.com/cover/9780735211292"/>
+
+
+</book>

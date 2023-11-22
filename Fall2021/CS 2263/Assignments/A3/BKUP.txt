@@ -1,0 +1,184 @@
+htags.c
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+//global data
+char input[100000];
+char *inputArray[100000];
+char counter[100];
+char *tagoccurance1[150];
+char *tagoccurance2[150];
+char *str1;
+char *str2;
+int tagc = 0;
+int i;
+//function declaractions
+void fileopen(char *x[]);
+void finallydisplay();
+//main method
+int main(int argc, char *argv[])
+{
+    i = 0;
+    char inputChar = fgetc(stdin);
+    while (inputChar != EOF)
+    {
+        input[i] = inputChar;
+        inputChar = fgetc(stdin);
+        i++;
+    }
+    int len = strlen(input);
+    int x = 0;
+    //print length
+    // printf("%d \n", len);
+    char *inputptr2 = &input[0];
+    int y = 0;
+    //for loop to get the starting pointer for each tag in *tagoccurance1[] array
+    for (i = 0; i < len; i++)
+    {
+        //check for start
+        if (*(inputptr2 + i) == '<' && *(inputptr2 + i + 1) != '!' && *(inputptr2 + i + 1) != '/')
+        {
+          // if(*(inputptr2 + i + 1) == '/'){
+          //   *inputptr2++;
+          // }
+            //save pointer value and increment values
+            *(tagoccurance1 + x) = inputptr2 + i + 1;
+            x++;
+            tagc++;
+        }
+        // else
+        // {
+        // }
+    }
+    int yt = 0;
+    char *end;
+    //printing the total number of tags
+    // printf("tags :: %d \n", tagc);
+    int h = 0;
+    //loop to check for and store end of tags in *tagoccurance2[] array
+    for (i = 0; i < tagc; i++)
+    {
+        //get character in ptr pointer
+        char *ptr;
+        ptr = *(tagoccurance1 + i);
+        //loop while not null
+        while (*ptr != '\0')
+        {
+            //check each character
+            if (*ptr == ' ' || *ptr == '>')
+            {
+                //save the end pointer if matches and increment ptr pointer
+                *(tagoccurance2 + h) = ptr;
+                *ptr++;
+                h++;
+                break;
+            }
+            else
+                //increment the pointer ptr
+                *ptr++;
+        }
+    }
+    int soup;
+    for (soup = 0; soup < tagc; soup++)
+    {
+        char *ptr2;
+        ptr2 = *(tagoccurance1 + soup);
+        char *ptr3;
+        ptr3 = *(tagoccurance2 + soup);
+        int loopsy = 0;
+        //get length we need
+        while (*ptr2 != *ptr3)
+        {
+            loopsy++;
+            *ptr2++;
+        }
+        //here we will have a tag (for example "html") in the pleasework pointer
+        char *ptr6;
+        ptr6 = *(tagoccurance1 + soup);
+        char *pleasework = (char *)malloc(loopsy);
+        strncpy(pleasework, ptr6, loopsy);
+        //loop number 2 to check multiple occurances of the value in pleasework
+        int stew;
+        for (stew = 0; stew < tagc; stew++)
+        {
+            char *ptrq;
+            ptrq = *(tagoccurance1 + stew);
+            char *ptrw;
+            ptrw = *(tagoccurance2 + stew);
+            int loopsydoopsy = 0;
+            while (*ptrq != *ptrw)
+            {
+                loopsydoopsy++;
+                *ptrq++;
+            }
+            //here we will have a tag called mightwork, that is just like pleasework
+            char *ptrg;
+            ptrg = *(tagoccurance1 + stew);
+            char *mightwork = (char *)malloc(loopsydoopsy);
+            strncpy(mightwork, ptrg, loopsydoopsy);
+            //now we check if the tags are same and increment the respective counter if they are
+            if (strcmp(pleasework, mightwork) == 0)
+                *(counter + stew) = *(counter + stew) + 1;
+            else
+            {
+            }
+        }
+    }
+    //this loop removes duplicate values from the array *tagoccurance1[]
+    for (i = 0; i < tagc; i++)
+    {
+        if (*(tagoccurance1 + i) == NULL)
+            continue;
+        else
+        {
+            int j;
+            for (j = i + 1; j < tagc; j++)
+            {
+                //continue if value is null in the array
+                if (*(tagoccurance1 + j) == NULL)
+                    continue;
+                else
+                {
+                    char *ptr2;
+                    ptr2 = *(tagoccurance1 + i);
+                    char *ptr3;
+                    ptr3 = *(tagoccurance2 + i);
+                    int loopsy = 0;
+                    while (*ptr2 != *ptr3)
+                    {
+                        loopsy++;
+                        *ptr2++;
+                    }
+                    char *ptr6;
+                    ptr6 = *(tagoccurance1 + i);
+                    str1 = (char *)malloc(loopsy);
+                    strncpy(str1, ptr6, loopsy);
+                    char *ptrq;
+                    ptrq = *(tagoccurance1 + j);
+                    char *ptrw;
+                    ptrw = *(tagoccurance2 + j);
+                    int loopsydoopsy = 0;
+                    while (*ptrq != *ptrw)
+                    {
+                        loopsydoopsy++;
+                        *ptrq++;
+                    }
+                    char *ptrg;
+                    ptrg = *(tagoccurance1 + j);
+                    str2 = (char *)malloc(loopsydoopsy);
+                    strncpy(str2, ptrg, loopsydoopsy);
+                    if (strcmp(str1, str2) == 0)
+                    {
+                        //Null both the start and end counters if same value occurs twice or more
+                        *(tagoccurance1 + j) = NULL;
+                        *(tagoccurance2 + j) = NULL;
+                    }
+                }
+            }
+        }
+    }
+    //call the display function
+    finallydisplay();
+    //exit successfully
+    return EXIT_SUCCESS;
+}

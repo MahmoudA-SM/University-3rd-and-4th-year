@@ -1,0 +1,943 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Present Registry API</title>
+    <style type="text/css">
+      body {
+      	font-family: Trebuchet MS, sans-serif;
+      	font-size: 15px;
+      	color: #444;
+      	margin-right: 24px;
+      }
+      
+      h1	{
+      	font-size: 25px;
+      }
+      h2	{
+      	font-size: 20px;
+      }
+      h3	{
+      	font-size: 16px;
+      	font-weight: bold;
+      }
+      hr	{
+      	height: 1px;
+      	border: 0;
+      	color: #ddd;
+      	background-color: #ddd;
+      }
+      
+      .app-desc {
+        clear: both;
+        margin-left: 20px;
+      }
+      .param-name {
+        width: 100%;
+      }
+      .license-info {
+        margin-left: 20px;
+      }
+      
+      .license-url {
+        margin-left: 20px;
+      }
+      
+      .model {
+        margin: 0 0 0px 20px;
+      }
+      
+      .method {
+        margin-left: 20px;
+      }
+      
+      .method-notes	{
+      	margin: 10px 0 20px 0;
+      	font-size: 90%;
+      	color: #555;
+      }
+      
+      pre {
+        padding: 10px;
+        margin-bottom: 2px;
+      }
+      
+      .http-method {
+       text-transform: uppercase;
+      }
+      
+      pre.get {
+        background-color: #0f6ab4;
+      }
+      
+      pre.post {
+        background-color: #10a54a;
+      }
+      
+      pre.put {
+        background-color: #c5862b;
+      }
+      
+      pre.delete {
+        background-color: #a41e22;
+      }
+      
+      .huge	{
+      	color: #fff;
+      }
+      
+      pre.example {
+        background-color: #f3f3f3;
+        padding: 10px;
+        border: 1px solid #ddd;
+      }
+      
+      code {
+        white-space: pre;
+      }
+      
+      .nickname {
+        font-weight: bold;
+      }
+      
+      .method-path {
+        font-size: 1.5em;
+        background-color: #0f6ab4;
+      }
+      
+      .up {
+        float:right;
+      }
+      
+      .parameter {
+        width: 500px;
+      }
+      
+      .param {
+        width: 500px;
+        padding: 10px 0 0 20px;
+        font-weight: bold;
+      }
+      
+      .param-desc {
+        width: 700px;
+        padding: 0 0 0 20px;
+        color: #777;
+      }
+      
+      .param-type {
+        font-style: italic;
+      }
+      
+      .param-enum-header {
+      width: 700px;
+      padding: 0 0 0 60px;
+      color: #777;
+      font-weight: bold;
+      }
+      
+      .param-enum {
+      width: 700px;
+      padding: 0 0 0 80px;
+      color: #777;
+      font-style: italic;
+      }
+      
+      .field-label {
+        padding: 0;
+        margin: 0;
+        clear: both;
+      }
+      
+      .field-items	{
+      	padding: 0 0 15px 0;
+      	margin-bottom: 15px;
+      }
+      
+      .return-type {
+        clear: both;
+        padding-bottom: 10px;
+      }
+      
+      .param-header {
+        font-weight: bold;
+      }
+      
+      .method-tags {
+        text-align: right;
+      }
+      
+      .method-tag {
+        background: none repeat scroll 0% 0% #24A600;
+        border-radius: 3px;
+        padding: 2px 10px;
+        margin: 2px;
+        color: #FFF;
+        display: inline-block;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+  <h1>Present Registry API</h1>
+    <div class="app-desc">This is a present registry or management API</div>
+    <div class="app-desc">More information: <a href="https://helloreverb.com">https://helloreverb.com</a></div>
+    <div class="app-desc">Contact Info: <a href="gsingh10@unb.ca">gsingh10@unb.ca</a></div>
+    <div class="app-desc">Version: 1.0.0-oas3</div>
+    <div class="app-desc">BasePath:/gsingh10/A5</div>
+    <div class="license-info">Apache 2.0</div>
+    <div class="license-url">http://www.apache.org/licenses/LICENSE-2.0.html</div>
+  <h2>Access</h2>
+
+  <h2><a name="__Methods">Methods</a></h2>
+  [ Jump to <a href="#__Models">Models</a> ]
+
+  <h3>Table of Contents </h3>
+  <div class="method-summary"></div>
+  <h4><a href="#Present">Present</a></h4>
+  <ul>
+  <li><a href="#addPresent"><code><span class="http-method">post</span> /present</code></a></li>
+  <li><a href="#presentPresentIdDelete"><code><span class="http-method">delete</span> /present/{present_id}</code></a></li>
+  <li><a href="#search present"><code><span class="http-method">get</span> /present/{present_id}</code></a></li>
+  <li><a href="#searchPresents"><code><span class="http-method">get</span> /presents</code></a></li>
+  </ul>
+  <h4><a href="#Users">Users</a></h4>
+  <ul>
+  <li><a href="#loginUser"><code><span class="http-method">post</span> /user/login</code></a></li>
+  <li><a href="#presentPresentIdDelete"><code><span class="http-method">delete</span> /present/{present_id}</code></a></li>
+  <li><a href="#search present"><code><span class="http-method">get</span> /present/{present_id}</code></a></li>
+  <li><a href="#search presents of a user"><code><span class="http-method">get</span> /users/{user_id}/presents</code></a></li>
+  <li><a href="#search user"><code><span class="http-method">get</span> /users/{user_id}</code></a></li>
+  <li><a href="#searchPresents"><code><span class="http-method">get</span> /presents</code></a></li>
+  <li><a href="#searchUsers"><code><span class="http-method">get</span> /users</code></a></li>
+  <li><a href="#update User"><code><span class="http-method">put</span> /users/{user_id}</code></a></li>
+  <li><a href="#usersUserIdDelete"><code><span class="http-method">delete</span> /users/{user_id}</code></a></li>
+  <li><a href="#usersUserIdPresentsPresentIdGet"><code><span class="http-method">get</span> /users/{user_id}/presents/{present_id}</code></a></li>
+  </ul>
+
+  <h1><a name="Present">Present</a></h1>
+  <div class="method"><a name="addPresent"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /present</code></pre></div>
+    <div class="method-summary">adds a present (<span class="nickname">addPresent</span>)</div>
+    <div class="method-notes">Adds a present to the database</div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#present">present</a> (optional)</div>
+      
+            <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Present item to add </div>
+                </div>  <!-- field-items -->
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">201</h4>
+    item created
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    invalid input, object invalid
+        <a href="#"></a>
+    <h4 class="field-label">409</h4>
+    an existing item already exists
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="presentPresentIdDelete"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /present/{present_id}</code></pre></div>
+    <div class="method-summary">delete a present associated with the presentId provided. (<span class="nickname">presentPresentIdDelete</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">present_id (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; present ID </div>    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    deletion was successful.
+        <a href="#"></a>
+    <h4 class="field-label">401</h4>
+    data is inavalid or missing.
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    No present with particular present Id found
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="search present"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /present/{present_id}</code></pre></div>
+    <div class="method-summary">Returns the details of particular present (<span class="nickname">search present</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">present_id (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; present ID </div>    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#present">present</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "present_description" : "Toy cars to be played with.",
+  "present_id" : "p291891ee",
+  "present_name" : "Hot wheels",
+  "present_link" : "https://www.amazon.ca/dp/B087QY6KMQ/ref=redir_mobile_desktop?_encoding=UTF8&aaxitk=20fc27bb19d698418d1127befbbd7eef&hsa_cr_id=9553559660301&pd_rd_plhdr=t&pd_rd_r=b11b4c3a-fd36-4331-ae1d-04e32c5b6d6d&pd_rd_w=DM8xw&pd_rd_wg=EMmyF&ref_=sbx_be_s_sparkle_mcd_asin_0_img",
+  "present_image" : "img_002313.png"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    returns a present object with given present id
+        <a href="#present">present</a>
+    <h4 class="field-label">401</h4>
+    Data is invalid or missing.
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    No present with this id found
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="searchPresents"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /presents</code></pre></div>
+    <div class="method-summary">searches all presents (<span class="nickname">searchPresents</span>)</div>
+    <div class="method-notes">Shows all the presents.</div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#present">present</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "present_description" : "Toy cars to be played with.",
+  "present_id" : "p291891ee",
+  "present_name" : "Hot wheels",
+  "present_link" : "https://www.amazon.ca/dp/B087QY6KMQ/ref=redir_mobile_desktop?_encoding=UTF8&aaxitk=20fc27bb19d698418d1127befbbd7eef&hsa_cr_id=9553559660301&pd_rd_plhdr=t&pd_rd_r=b11b4c3a-fd36-4331-ae1d-04e32c5b6d6d&pd_rd_w=DM8xw&pd_rd_wg=EMmyF&ref_=sbx_be_s_sparkle_mcd_asin_0_img",
+  "present_image" : "img_002313.png"
+}, {
+  "present_description" : "Toy cars to be played with.",
+  "present_id" : "p291891ee",
+  "present_name" : "Hot wheels",
+  "present_link" : "https://www.amazon.ca/dp/B087QY6KMQ/ref=redir_mobile_desktop?_encoding=UTF8&aaxitk=20fc27bb19d698418d1127befbbd7eef&hsa_cr_id=9553559660301&pd_rd_plhdr=t&pd_rd_r=b11b4c3a-fd36-4331-ae1d-04e32c5b6d6d&pd_rd_w=DM8xw&pd_rd_wg=EMmyF&ref_=sbx_be_s_sparkle_mcd_asin_0_img",
+  "present_image" : "img_002313.png"
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    search results all the presents
+        
+    <h4 class="field-label">400</h4>
+    bad input parameter
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="Users">Users</a></h1>
+  <div class="method"><a name="loginUser"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /user/login</code></pre></div>
+    <div class="method-summary">Logs user into the system (<span class="nickname">loginUser</span>)</div>
+    <div class="method-notes"></div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#signin">signin</a> (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Giving user to login through web. </div>
+                </div>  <!-- field-items -->
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    successful login
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    Invalid username/password.
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="presentPresentIdDelete"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /present/{present_id}</code></pre></div>
+    <div class="method-summary">delete a present associated with the presentId provided. (<span class="nickname">presentPresentIdDelete</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">present_id (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; present ID </div>    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    deletion was successful.
+        <a href="#"></a>
+    <h4 class="field-label">401</h4>
+    data is inavalid or missing.
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    No present with particular present Id found
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="search present"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /present/{present_id}</code></pre></div>
+    <div class="method-summary">Returns the details of particular present (<span class="nickname">search present</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">present_id (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; present ID </div>    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#present">present</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "present_description" : "Toy cars to be played with.",
+  "present_id" : "p291891ee",
+  "present_name" : "Hot wheels",
+  "present_link" : "https://www.amazon.ca/dp/B087QY6KMQ/ref=redir_mobile_desktop?_encoding=UTF8&aaxitk=20fc27bb19d698418d1127befbbd7eef&hsa_cr_id=9553559660301&pd_rd_plhdr=t&pd_rd_r=b11b4c3a-fd36-4331-ae1d-04e32c5b6d6d&pd_rd_w=DM8xw&pd_rd_wg=EMmyF&ref_=sbx_be_s_sparkle_mcd_asin_0_img",
+  "present_image" : "img_002313.png"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    returns a present object with given present id
+        <a href="#present">present</a>
+    <h4 class="field-label">401</h4>
+    Data is invalid or missing.
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    No present with this id found
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="search presents of a user"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /users/{user_id}/presents</code></pre></div>
+    <div class="method-summary">Returns the presents of particular User (<span class="nickname">search presents of a user</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">user_id (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; User ID </div>    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#present">present</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "present_description" : "Toy cars to be played with.",
+  "present_id" : "p291891ee",
+  "present_name" : "Hot wheels",
+  "present_link" : "https://www.amazon.ca/dp/B087QY6KMQ/ref=redir_mobile_desktop?_encoding=UTF8&aaxitk=20fc27bb19d698418d1127befbbd7eef&hsa_cr_id=9553559660301&pd_rd_plhdr=t&pd_rd_r=b11b4c3a-fd36-4331-ae1d-04e32c5b6d6d&pd_rd_w=DM8xw&pd_rd_wg=EMmyF&ref_=sbx_be_s_sparkle_mcd_asin_0_img",
+  "present_image" : "img_002313.png"
+}, {
+  "present_description" : "Toy cars to be played with.",
+  "present_id" : "p291891ee",
+  "present_name" : "Hot wheels",
+  "present_link" : "https://www.amazon.ca/dp/B087QY6KMQ/ref=redir_mobile_desktop?_encoding=UTF8&aaxitk=20fc27bb19d698418d1127befbbd7eef&hsa_cr_id=9553559660301&pd_rd_plhdr=t&pd_rd_r=b11b4c3a-fd36-4331-ae1d-04e32c5b6d6d&pd_rd_w=DM8xw&pd_rd_wg=EMmyF&ref_=sbx_be_s_sparkle_mcd_asin_0_img",
+  "present_image" : "img_002313.png"
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    returns a presnt list of given User id.
+        
+    <h4 class="field-label">401</h4>
+    Data is invalid or missing.
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    No User with this id found
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="search user"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /users/{user_id}</code></pre></div>
+    <div class="method-summary">Returns the details of particular User (<span class="nickname">search user</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">user_id (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; User ID </div>    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#users">users</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "user_email" : "myemail@gmail.com",
+  "user_id" : "u291891ee",
+  "user_name" : "Rick Wightman",
+  "user_age" : 0
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    returns a User object with given User id
+        <a href="#users">users</a>
+    <h4 class="field-label">401</h4>
+    Data is invalid or missing.
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    No User with this id found
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="searchPresents"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /presents</code></pre></div>
+    <div class="method-summary">searches all presents (<span class="nickname">searchPresents</span>)</div>
+    <div class="method-notes">Shows all the presents.</div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#present">present</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "present_description" : "Toy cars to be played with.",
+  "present_id" : "p291891ee",
+  "present_name" : "Hot wheels",
+  "present_link" : "https://www.amazon.ca/dp/B087QY6KMQ/ref=redir_mobile_desktop?_encoding=UTF8&aaxitk=20fc27bb19d698418d1127befbbd7eef&hsa_cr_id=9553559660301&pd_rd_plhdr=t&pd_rd_r=b11b4c3a-fd36-4331-ae1d-04e32c5b6d6d&pd_rd_w=DM8xw&pd_rd_wg=EMmyF&ref_=sbx_be_s_sparkle_mcd_asin_0_img",
+  "present_image" : "img_002313.png"
+}, {
+  "present_description" : "Toy cars to be played with.",
+  "present_id" : "p291891ee",
+  "present_name" : "Hot wheels",
+  "present_link" : "https://www.amazon.ca/dp/B087QY6KMQ/ref=redir_mobile_desktop?_encoding=UTF8&aaxitk=20fc27bb19d698418d1127befbbd7eef&hsa_cr_id=9553559660301&pd_rd_plhdr=t&pd_rd_r=b11b4c3a-fd36-4331-ae1d-04e32c5b6d6d&pd_rd_w=DM8xw&pd_rd_wg=EMmyF&ref_=sbx_be_s_sparkle_mcd_asin_0_img",
+  "present_image" : "img_002313.png"
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    search results all the presents
+        
+    <h4 class="field-label">400</h4>
+    bad input parameter
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="searchUsers"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /users</code></pre></div>
+    <div class="method-summary">searches all users (<span class="nickname">searchUsers</span>)</div>
+    <div class="method-notes">Shows all the Users.</div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#users">users</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "user_email" : "myemail@gmail.com",
+  "user_id" : "u291891ee",
+  "user_name" : "Rick Wightman",
+  "user_age" : 0
+}, {
+  "user_email" : "myemail@gmail.com",
+  "user_id" : "u291891ee",
+  "user_name" : "Rick Wightman",
+  "user_age" : 0
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    search results all the presents
+        
+    <h4 class="field-label">400</h4>
+    bad input parameter
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="update User"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /users/{user_id}</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">update User</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">user_id (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; User Id </div>    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">user (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; User object that needs to be updated </div>    </div>  <!-- field-items -->
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">400</h4>
+    Invalid ID supplied
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    User not found
+        <a href="#"></a>
+    <h4 class="field-label">405</h4>
+    Validation exception
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="usersUserIdDelete"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /users/{user_id}</code></pre></div>
+    <div class="method-summary">delete a User associated with the User Id providing username and password. (<span class="nickname">usersUserIdDelete</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">user_id (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; present ID </div>    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">username (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; username </div>      <div class="param">password (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; password </div>    </div>  <!-- field-items -->
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    deletion was successful.
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    Invalid username/password.
+        <a href="#"></a>
+    <h4 class="field-label">401</h4>
+    data is inavalid or missing.
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    No present with particular present Id found
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="usersUserIdPresentsPresentIdGet"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /users/{user_id}/presents/{present_id}</code></pre></div>
+    <div class="method-summary">Gets the patrticular present for a given user. (<span class="nickname">usersUserIdPresentsPresentIdGet</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">user_id (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Id of give User </div>      <div class="param">present_id (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Present Id to need. </div>    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#present">present</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "present_description" : "Toy cars to be played with.",
+  "present_id" : "p291891ee",
+  "present_name" : "Hot wheels",
+  "present_link" : "https://www.amazon.ca/dp/B087QY6KMQ/ref=redir_mobile_desktop?_encoding=UTF8&aaxitk=20fc27bb19d698418d1127befbbd7eef&hsa_cr_id=9553559660301&pd_rd_plhdr=t&pd_rd_r=b11b4c3a-fd36-4331-ae1d-04e32c5b6d6d&pd_rd_w=DM8xw&pd_rd_wg=EMmyF&ref_=sbx_be_s_sparkle_mcd_asin_0_img",
+  "present_image" : "img_002313.png"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    request ok.
+        <a href="#present">present</a>
+    <h4 class="field-label">400</h4>
+    Invalid input, Bad request. No user present with this Id.
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    No present located with this present Id .
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+
+  <h2><a name="__Models">Models</a></h2>
+  [ Jump to <a href="#__Methods">Methods</a> ]
+
+  <h3>Table of Contents</h3>
+  <ol>
+    <li><a href="#present"><code>present</code></a></li>
+    <li><a href="#signin"><code>signin</code></a></li>
+    <li><a href="#users"><code>users</code></a></li>
+  </ol>
+
+  <div class="model">
+    <h3><a name="present"><code>present</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">present_id </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: p291891ee</span></div>
+<div class="param">present_name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: Hot wheels</span></div>
+<div class="param">present_description (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: Toy cars to be played with.</span></div>
+<div class="param">present_link </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  format: url</div>
+          <div class="param-desc"><span class="param-type">example: https://www.amazon.ca/dp/B087QY6KMQ/ref&#x3D;redir_mobile_desktop?_encoding&#x3D;UTF8&amp;aaxitk&#x3D;20fc27bb19d698418d1127befbbd7eef&amp;hsa_cr_id&#x3D;9553559660301&amp;pd_rd_plhdr&#x3D;t&amp;pd_rd_r&#x3D;b11b4c3a-fd36-4331-ae1d-04e32c5b6d6d&amp;pd_rd_w&#x3D;DM8xw&amp;pd_rd_wg&#x3D;EMmyF&amp;ref_&#x3D;sbx_be_s_sparkle_mcd_asin_0_img</span></div>
+<div class="param">present_image (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: img_002313.png</span></div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="signin"><code>signin</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">username </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: gsinggh10</span></div>
+<div class="param">password </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: mypassword</span></div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="users"><code>users</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">user_id </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: u291891ee</span></div>
+<div class="param">user_name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: Rick Wightman</span></div>
+<div class="param">user_email </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: myemail@gmail.com</span></div>
+<div class="param">user_age (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  </body>
+</html>

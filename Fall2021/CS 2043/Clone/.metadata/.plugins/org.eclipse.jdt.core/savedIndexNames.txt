@@ -1,0 +1,4 @@
+INDEX VERSION 1.131+C:\Users\momou\Desktop\University\CS 2043\Clone\.metadata\.plugins\org.eclipse.jdt.core
+1210658807.index
+1837592540.index
+1865797976.index

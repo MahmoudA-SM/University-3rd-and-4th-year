@@ -1,0 +1,23 @@
+{
+    "2001": {"gold":"Czech Republic ", "silver":"Finland", "bronze":"Sweden"},
+    "2002": {"gold":"Slovakia ", "silver":"Russia", "bronze":"Sweden"},
+    "2003": {"gold":"Canada", "silver":"Sweden", "bronze":"Slovakia "},
+    "2004": {"gold":"Canada", "silver":"Sweden", "bronze":"USA"},
+    "2005": {"gold":"Czech Republic", "silver":"Canada", "bronze":"Russia"},
+    "2006": {"gold":"Sweden", "silver":"Czech Republic", "bronze":"Finland"},
+    "2007": {"gold":"Canada", "silver":"Finland", "bronze":"Russia"},
+    "2008": {"gold":"Russia", "silver":"Canada", "bronze":"Finland"},
+    "2009": {"gold":"Russia", "silver":"Canada", "bronze":"Sweden"},
+    "2010": {"gold":"Czech Republic", "silver":"Russia", "bronze":"Sweden"},
+    "2011": {"gold":"Finland", "silver":"Sweden", "bronze":"Czech Republic"},
+    "2012": {"gold":"Russia", "silver":"Slovakia", "bronze":"Czech Republic"},
+    "2013": {"gold":"Sweden", "silver":"Switzerland", "bronze":"USA"},
+    "2014": {"gold":"Russia", "silver":"Finland", "bronze":"Sweden"},
+    "2015": {"gold":"Canada", "silver":"Russia", "bronze":"USA"},
+    "2016": {"gold":"Canada", "silver":"Finland", "bronze":"Russia"},
+    "2017": {"gold":"Sweden", "silver":"Canada", "bronze":"Russia"},
+    "2018": {"gold":"Sweden", "silver":"Switzerland", "bronze":"United States"},
+    "2019": {"gold":"Finland", "silver":"Canada", "bronze":"Russia"},
+	"2020": {"gold":"na", "silver":"na", "bronze":"na"},
+	"2021": {"gold":"Canada", "silver":"Finland", "bronze":"United States"}
+} 

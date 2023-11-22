@@ -1,0 +1,7 @@
+MariaDB [(none)]> use mmoustaf
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+CREATE TABLE quotes (id INT AUTO_INCREMENT PRIMARY KEY,
+quote VARCHAR(255) NOT NULL);

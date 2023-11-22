@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "typeinfo": "c",
+        "pointlistmodule.h": "c"
+    }
+}

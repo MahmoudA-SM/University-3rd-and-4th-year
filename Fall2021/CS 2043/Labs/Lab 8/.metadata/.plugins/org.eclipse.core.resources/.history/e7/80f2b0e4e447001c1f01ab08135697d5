@@ -1,0 +1,6 @@
+
+public class InfoPrintDupuis {
+	public void printDupuis() {
+		System.out.println("Allison Dupuis");
+	}
+}

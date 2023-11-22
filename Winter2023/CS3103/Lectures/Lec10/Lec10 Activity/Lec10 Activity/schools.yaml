@@ -1,0 +1,132 @@
+openapi: 3.0.0
+servers: []
+info:
+  description: This is a simple API for managing schools
+  version: '1.0'
+  title: Schools API
+  contact:
+    email: wightman@unb.ca
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+tags:
+  - name: admins
+    description: Secured Admin-only calls
+  - name: developers
+    description: Operations available to regular developers
+paths:
+  /schools:
+    get:
+      tags:
+        - developers
+      summary: searches Schools table
+      operationId: searchSchools
+      description: |
+        Lists all schools, or a subset for a specified Province/State
+      parameters:
+        - in: query
+          name: schoolLocation
+          description: optional Province/State value to search for
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/School'
+            application/xml:
+              schema:
+                xml:
+                  name: 'schools'
+                type: array
+                items:
+                  $ref: '#/components/schemas/School'
+        '400':
+          description: bad input parameter
+    post:
+      tags:
+        - admins
+      summary: adds a school
+      operationId: addSchool
+      description: Adds a school to the system
+      responses:
+        '201':
+          description: item created
+        '400':
+          description: 'invalid input, object invalid'
+        '409':
+          description: an existing item already exists
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/School'
+        description: School to add
+        
+  /schools/{schoolId}:
+    get:
+      tags:
+        - developers
+      description: Obtain information about a school based on it's unique schoolId
+      parameters:
+        - name: schoolId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successfully returned a school
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/School'
+        '400':
+          description: Invalid request
+    delete:
+      tags:
+        - admins
+      description: Delete a school by unique schoolId
+      parameters:
+        - name: schoolId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Successfully deleted a school
+        '404':
+          description: Resource not found
+components:
+  schemas:
+    School:
+      type: object
+      required:
+        - name
+        - province
+        - language
+        - level
+      properties:
+        schoolId:
+          type: integer
+          example: 6
+        name:
+          type: string
+          example: McAdam High School
+        province:
+          type: string
+          example: 'NB'
+        language:
+          type: string
+          example: 'EN'
+        level:
+          type: string
+          example: 'High'

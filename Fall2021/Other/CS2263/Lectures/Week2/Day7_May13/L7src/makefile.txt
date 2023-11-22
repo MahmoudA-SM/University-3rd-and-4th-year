@@ -1,0 +1,9 @@
+
+areDistinct: main.o arDistinct.o 
+    gcc main.o areDistinct.o -o areDistinct
+
+main.o: main.c
+    gcc -c main.c
+
+areDistinct.o: areDistinct.c
+    gcc -c areDistinct.c

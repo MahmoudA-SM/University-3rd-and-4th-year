@@ -1,0 +1,64 @@
+#lang racket/base
+(module question1 plait
+  (define-type LAE
+  [Num  (val : Number)]
+  [Add  (l : LAE) (r : LAE)]
+  [Id   (name : Symbol)]
+  [Let1 (name : Symbol) (val : LAE) (expr : LAE)]
+  [Let2 (name1 : Symbol) (val1 : LAE) (name2 : Symbol) (val2 : LAE) (expr : LAE)])
+
+
+
+  (define (subst expr from to)
+  (type-case LAE expr
+    [(Num n) expr]
+    [(Add l r) (Add (subst l from to) (subst r from to))]
+    [(Id name) (if (eq? name from) to expr)]
+    [(Let1 bound-id named-expr bound-body)
+     (Let1 bound-id
+           (subst named-expr from to)
+           (if (eq? bound-id from)
+               bound-body
+               (subst bound-body from to)))]
+    [(Let2 bound-id1 named-expr1 bound-id2 named-expr2 bound-body)
+     (Let2 bound-id1 (subst named-expr1 from to) bound-id2 (subst named-expr2 from to)
+           (if (eq? bound-id1 from)
+               bound-body
+               (if(eq? bound-id2 from)
+                  bound-body
+                  (subst bound-body from to))
+               ))]))
+
+(trace subst)
+  (test (subst
+       (Let2 'x (Id 'x) 'y (Id 'y) (Id 'y))
+       'y
+       (Num 5))
+      (Let2 'x (Id 'x) 'y (Num 5) (Id 'y)))
+  (test (subst
+       (Let2 'x (Id 'x) 'y (Id 'y) (Id 'x))
+       'x
+       (Num 5))
+      (Let2 'x (Num 5) 'y (Id 'y) (Id 'x)))
+  (test (subst
+       (Let2 'x (Id 'x) 'y (Id 'y) (Id 'z))
+       'z
+       (Num 5))
+      (Let2 'x (Id 'x) 'y (Id 'y) (Num 5)))
+
+
+  
+
+
+  (test (let ([x 1] [y 2])
+        (let ([x y] [y x])
+          (- x y)))
+      1)
+  )
+(module question2 plait #:untyped
+        )
+(module question3 plait
+  )
+(require (only-in 'question1))
+(require (only-in 'question2))
+(require (only-in 'question3))

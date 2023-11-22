@@ -1,0 +1,6 @@
+/** Prints my Name */
+public class InfoPrintDoucette {
+	public void printDoucette() {
+		System.out.println("Brendan Doucette");
+	}
+}

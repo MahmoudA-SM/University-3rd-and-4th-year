@@ -1,0 +1,8 @@
+CALL addquote('The man who moves a mountain begins by carrying away small stones.');
+CALL addquote('The measure of a man is what he does with power');
+CALL addquote('The only true wisdom is in knowing you know nothing.')
+    -> ;
+CALL addquote('The greatest way to live with honor in this world is to be what we pretend to be.');
+CALL addquote('The secret of change is to focus all of your energy, not on fighting the old, but on building the new.');
+CALL addquote ('Courage is knowing what not to fear.');
+CALL addquote ('The beginning of wisdom is a definition of terms.');

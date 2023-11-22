@@ -1,0 +1,53 @@
+import java.sql.*;
+import java.util.ArrayList;
+public class DataManager {
+	Connection connection = null;
+	private ArrayList<MusicInfoObject> object;
+	
+	
+	public DataManager() {
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+		}
+		catch(Exception e) {
+			System.err.println(e.toString());
+		}
+		String url = "jdbc:mysql://cs2043.cs.unb.ca:3306/cs204301ateam3";
+		try {
+			connection = DriverManager.getConnection(url, "cs204301ateam3", "nEU31KGM");
+		}
+		catch(SQLException e) {
+			System.err.println("Database connection error.");
+		}
+	}
+	
+	
+	public ArrayList<MusicInfoObject>getMusicByKeywords(ArrayList<String> keywords){
+		ArrayList <MusicInfoObject> musicList = new ArrayList <MusicInfoObject>();
+		try {
+			Statement st = connection.createStatement();
+			
+			String sqlQuery = "select * from MusicInformation where ";
+			for(int i = 0; i < keywords.size(); i++) {
+				if (i < keywords.size() - 1)
+					sqlQuery = sqlQuery + "musicName like '%" + keywords.get(i) + "%' or ";
+				else sqlQuery = sqlQuery + "musicName like '%" + keywords.get(i) + "%';";
+			}
+			
+			ResultSet rs = st.executeQuery(sqlQuery);
+			
+			while(rs.next()) {
+				MusicInfoObject p = new MusicInfoObject();
+				
+				p.userID = rs.getString(7);
+				p.musicName = rs.getString(1);
+				
+				musicList.add(p);
+			}
+		}
+		catch (SQLException e) {
+			System.err.println("SQL error: getMusicByKeywords");
+		}
+		return musicList;
+	}
+}

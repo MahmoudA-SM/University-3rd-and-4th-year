@@ -1,0 +1,83 @@
+getTag
+void* calcTag(char *s){
+	int i = 0;
+	while(s[i] != (char*)NULL){
+		if (s[i] == '<'){
+			if(s[i+1] != '!' && s[i+1] != '/'){
+				return &s[i+1];
+			}
+		}
+		i ++;
+    }
+}
+
+
+Main 
+
+
+int main(int argc, char* argv[])
+{
+	FILE* f;
+	
+	f = fopen(argv[1], "r");
+	
+	int *counter = (int*)malloc(sizeof(int) * 100);
+	char *inputArray = (char*)malloc(sizeof(char) * 100000);
+	char *inputArrayC = inputArray;
+	char **inputArrayP = (char**)malloc(sizeof(char*) * 100);
+	int inputArrayLength = 0;
+	int numtags = 0;
+	int i;
+	
+	char inputChar = fgetc(f);
+	while(inputChar != EOF && inputArrayLength < 100000){
+		inputArray[inputArrayLength] = inputChar;
+		inputArrayLength++;
+		inputChar = fgetc(f);
+	}
+	
+	inputArrayC = getTag(inputArrayC);
+	while(inputArrayC != (char*)NULL){
+		
+		int success = 1;
+		for(i=0; i<numtags && !success; i++){
+			if(*inputArrayC == *inputArrayP[i]){
+				int unique = isUnique(inputArrayC, inputArrayP[i]);
+				if(unique == 0){
+					counter[i] += 1;
+					success = 0;
+				}
+			}
+		}
+		if(success == 1){
+			inputArrayP[numtags] = inputArrayC;
+			counter[numtags] = 1;
+			numtags++;
+		}
+		inputArrayC = getTag(inputArrayC);
+	}
+	
+	for(i=0; i<numtags; i++){
+		display(inputArrayP[i], counter[i]);
+	}
+	
+	free(inputArray);
+	free(counter);
+	free(inputArrayP);
+	
+	return EXIT_SUCCESS;
+}
+
+display.c
+
+#include <stdio.h>
+#include <stdlib.h>
+void display(int count, char *tag){
+	int i = 0;
+	while(tag[i] != '>' && tag[i] != ' ' && tag[i] != '/'){
+		printf("%c", tag[i]);
+		i++;
+	}
+	printf("\t%d\n", count);
+	
+}

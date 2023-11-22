@@ -1,0 +1,246 @@
+openapi: 3.0.0
+servers: 
+  - url: https://cs3103.cs.unb.ca/mmoustaf/A5
+info:
+  description: This is a simple API for to allow each person to manage their documents on their personal sky drive.
+  version: '1.0'
+  title: Documents API
+  contact:
+    email: mmoustaf@unb.ca
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+tags:
+  - name: registered_users
+    description: Registered users access
+  - name: unregistered_users
+    description: Unregistered users access
+
+paths:
+  /users/signup:
+    post:
+      tags:
+        - unregistered_users
+      summary: Allows users to sign up
+      description: create a new user account 
+      operationId: signUp
+      requestBody: 
+        description: Unregistered users can sign up
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Users'
+      responses:
+        '201' :
+          description: Successfully signed up
+        '400' :
+          description: Sign up Failed
+        '409' :
+          description: An existing user already exists
+          
+  /users/signin:
+    get:
+      tags:
+        - unregistered_users
+      summary: Allows users to sign in
+      description: allows users to sign in if they have registered
+      operationId: signIn
+      parameters:
+        - name: userName
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: password
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Signed in successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Users'
+        '400':
+          description: Invalid username/password 
+        '404':
+          description: User not found
+  
+  /users/deleteaccount/{userID}:
+    delete:
+      tags:
+        - registered_users
+      summary: Allows registered users to delete their account
+      operationId: deleteAccount
+      parameters:
+        - name: userName
+          in: query
+          required: true
+          schema: 
+            type: string
+        - name : userID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: User successfully deleted
+        '404':
+          description: User not found
+            
+  
+  /documents/users/{userID}:
+    get:
+      tags:
+        - registered_users
+      summary: gets all documents owned by the registered user 
+      operationId: getAllDocuments
+      description: |
+        Lists all documents owned by the registered user.
+      parameters:
+        - name : userID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Returned all documents owned by the registered user.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Documents'
+            application/xml:
+              schema:
+                xml:
+                  name: 'documents'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Documents'
+        '400':
+          description: bad input parameter
+    post:
+      tags:
+        - registered_users
+      summary: adds a document
+      operationId: addDocument
+      description: Adds a document to the user's collection
+      parameters:
+        - name : userID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '201':
+          description: document added
+        '400':
+          description: 'invalid input, object invalid'
+        '409':
+          description: an existing document already exists
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Documents'
+        description: document to add
+        
+  /documents/{documentName}/users/{userID}:
+    get:
+      tags:
+        - registered_users
+      summary: gets the specified document owned by the user
+      description: Obtain information about a document based on it's name
+      parameters:
+        - name: documentName
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: userID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully returned a document
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Documents'
+        '400':
+          description: Invalid request
+    delete:
+      tags:
+        - registered_users
+      description: Delete a document by unique documentId
+      summary: deletes the specified document owned by the user
+      parameters:
+        - name: documentName
+          in: path
+          required: true
+          schema:
+            type: string
+        - name : userID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Successfully deleted the specified document
+        '404':
+          description: Document not found
+components:
+  schemas:
+    Documents:
+      type: object
+      required:
+        - name
+        - owner
+      properties:
+        documentId:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Web Development Handbook.pdf
+        owner:
+          type: string
+          example: mmoustaf
+    Users:
+      type: object
+      required:
+        - username
+        - password
+        - firstName
+        - lastName 
+        - email
+      properties:
+        username: 
+          type: string
+          example: mmoustaf
+        password:
+          type: string
+          example: myunbcspwd
+        firstName:
+          type: string
+          example: Mahmoud
+        lastName:
+          type: string
+          example: Moustafa
+        email:
+          type: string
+          example: mmoustaf@unb.ca
+        
+        
+        

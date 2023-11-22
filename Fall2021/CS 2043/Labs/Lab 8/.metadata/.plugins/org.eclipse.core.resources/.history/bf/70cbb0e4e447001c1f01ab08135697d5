@@ -1,0 +1,11 @@
+
+public class InfoPrintDuman {
+
+	public void printDuman() {
+		
+		System.out.println("Burak Duman\n");
+
+	}
+	
+
+}

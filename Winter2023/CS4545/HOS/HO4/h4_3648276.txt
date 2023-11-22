@@ -1,0 +1,286 @@
+The create table statement for netflix:
+
+CREATE TABLE netflix (show_id STRING, type STRING, title STRING, director STRING, cast_member STRING, country STRING, date_added STRING, release_year INT, rating STRING, duration STRING, seasons INT, listed_in STRING, description STRING) ROW FORMAT DELIMITED FIELDS TERMINATED BY '|' COLLECTION ITEMS TERMINATED BY',';
+
+Table data loading statement for loading data into table netflix:
+
+LOAD DATA LOCAL INPATH '/home/bigdata/Datasets/netflix_show_info.csv' OVERWRITE INTO TABLE netflix;
+
+
+Queries Q1 to Q4:
+
+Q1: 
+SELECT COUNT (*) AS num_movies 
+FROM netflix 
+WHERE type = 'Movie' and release_year BETWEEN 1991 AND 2000;
+
+Q2: 
+SELECT title, country, listed_in, seasons
+FROM netflix
+WHERE type = 'TV Show'
+ORDER BY seasons DESC
+LIMIT 1;
+
+Q3:
+
+SELECT c.cast_member, COUNT(*) AS num_titles
+FROM netflix
+LATERAL VIEW explode(split(cast_member, ',')) c AS cast_member
+WHERE type IN ('Movie', 'TV Show')
+GROUP BY c.cast_member
+ORDER BY num_titles DESC
+LIMIT 10;
+
+
+Q4:
+
+SELECT DISTINCT n1.title, n1.director
+FROM netflix n1
+JOIN netflix n2 ON n1.show_id = n2.show_id AND n1.director = n2.cast_member
+WHERE n1.type = 'Movie';
+
+
+
+Output of the queries Q1 to Q4:
+
+Q1 Output:
+
+Query ID = bigdata_20230308181116_7fe768e3-bcea-484d-95f2-aaff874842fa
+Total jobs = 1
+Launching Job 1 out of 1
+Number of reduce tasks determined at compile time: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Starting Job = job_1678310645599_0005, Tracking URL = http://bigdatamaster:8088/proxy/application_1678310645599_0005/
+Kill Command = /home/bigdata/hadoop/hadoop-2.7.1/bin/hadoop job  -kill job_1678310645599_0005
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 1
+2023-03-08 18:11:22,359 Stage-1 map = 0%,  reduce = 0%
+2023-03-08 18:11:28,677 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 1.18 sec
+2023-03-08 18:11:33,871 Stage-1 map = 100%,  reduce = 100%, Cumulative CPU 2.37 sec
+MapReduce Total cumulative CPU time: 2 seconds 370 msec
+Ended Job = job_1678310645599_0005
+MapReduce Jobs Launched: 
+Stage-Stage-1: Map: 1  Reduce: 1   Cumulative CPU: 2.37 sec   HDFS Read: 3321457 HDFS Write: 4 SUCCESS
+Total MapReduce CPU Time Spent: 2 seconds 370 msec
+OK
+255
+Time taken: 19.954 seconds, Fetched: 1 row(s)
+
+
+Q2 Output:
+
+Query ID = bigdata_20230308181602_40d2c7d2-f983-4fd6-ae7f-b772471662ad
+Total jobs = 1
+Launching Job 1 out of 1
+Number of reduce tasks determined at compile time: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Starting Job = job_1678310645599_0006, Tracking URL = http://bigdatamaster:8088/proxy/application_1678310645599_0006/
+Kill Command = /home/bigdata/hadoop/hadoop-2.7.1/bin/hadoop job  -kill job_1678310645599_0006
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 1
+2023-03-08 18:16:08,400 Stage-1 map = 0%,  reduce = 0%
+2023-03-08 18:16:13,661 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 1.23 sec
+2023-03-08 18:16:18,907 Stage-1 map = 100%,  reduce = 100%, Cumulative CPU 2.21 sec
+MapReduce Total cumulative CPU time: 2 seconds 210 msec
+Ended Job = job_1678310645599_0006
+MapReduce Jobs Launched: 
+Stage-Stage-1: Map: 1  Reduce: 1   Cumulative CPU: 2.21 sec   HDFS Read: 3320347 HDFS Write: 61 SUCCESS
+Total MapReduce CPU Time Spent: 2 seconds 210 msec
+OK
+Grey's Anatomy	United States	Romantic TV Shows, TV Dramas	17
+Time taken: 18.82 seconds, Fetched: 1 row(s)
+
+
+
+Q3 Output:
+
+
+Query ID = bigdata_20230308183112_4f04737d-ed7f-4947-ab7a-2cdb2468405c
+Total jobs = 2
+Launching Job 1 out of 2
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Starting Job = job_1678310645599_0007, Tracking URL = http://bigdatamaster:8088/proxy/application_1678310645599_0007/
+Kill Command = /home/bigdata/hadoop/hadoop-2.7.1/bin/hadoop job  -kill job_1678310645599_0007
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 1
+2023-03-08 18:31:17,281 Stage-1 map = 0%,  reduce = 0%
+2023-03-08 18:31:23,488 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 1.75 sec
+2023-03-08 18:31:29,723 Stage-1 map = 100%,  reduce = 100%, Cumulative CPU 3.03 sec
+MapReduce Total cumulative CPU time: 3 seconds 30 msec
+Ended Job = job_1678310645599_0007
+Launching Job 2 out of 2
+Number of reduce tasks determined at compile time: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Starting Job = job_1678310645599_0008, Tracking URL = http://bigdatamaster:8088/proxy/application_1678310645599_0008/
+Kill Command = /home/bigdata/hadoop/hadoop-2.7.1/bin/hadoop job  -kill job_1678310645599_0008
+Hadoop job information for Stage-2: number of mappers: 1; number of reducers: 1
+2023-03-08 18:31:39,969 Stage-2 map = 0%,  reduce = 0%
+2023-03-08 18:31:45,170 Stage-2 map = 100%,  reduce = 0%, Cumulative CPU 1.02 sec
+2023-03-08 18:31:51,430 Stage-2 map = 100%,  reduce = 100%, Cumulative CPU 2.11 sec
+MapReduce Total cumulative CPU time: 2 seconds 110 msec
+Ended Job = job_1678310645599_0008
+MapReduce Jobs Launched: 
+Stage-Stage-1: Map: 1  Reduce: 1   Cumulative CPU: 3.03 sec   HDFS Read: 3323179 HDFS Write: 1317667 SUCCESS
+Stage-Stage-2: Map: 1  Reduce: 1   Cumulative CPU: 2.11 sec   HDFS Read: 1322341 HDFS Write: 154 SUCCESS
+Total MapReduce CPU Time Spent: 5 seconds 140 msec
+OK
+	825
+ Anupam Kher	39
+ Rupa Bhimani	31
+ Takahiro Sakurai	30
+ Julie Tejwani	28
+ Om Puri	27
+ Rajesh Kava	26
+Shah Rukh Khan	26
+ Yuki Kaji	25
+ Paresh Rawal	25
+Time taken: 40.387 seconds, Fetched: 10 row(s)
+
+
+
+Q4 Output:
+
+
+Query ID = bigdata_20230308184106_eaf0c49e-f866-4cc7-af1b-0adeda25092a
+Total jobs = 1
+2023-03-08 18:41:09,366 WARN  [main] util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Execution log at: /tmp/bigdata/bigdata_20230308184106_eaf0c49e-f866-4cc7-af1b-0adeda25092a.log
+2023-03-08 18:41:10	Starting to launch local task to process map join;	maximum memory = 518979584
+2023-03-08 18:41:11	Dump the side-table for tag: 0 with group count: 6131 into file: file:/tmp/bigdata/94d37033-b983-4854-ac6d-5624918b9663/hive_2023-03-08_18-41-06_544_5035023819205505818-1/-local-10004/HashTable-Stage-2/MapJoin-mapfile00--.hashtable
+2023-03-08 18:41:11	Uploaded 1 File to: file:/tmp/bigdata/94d37033-b983-4854-ac6d-5624918b9663/hive_2023-03-08_18-41-06_544_5035023819205505818-1/-local-10004/HashTable-Stage-2/MapJoin-mapfile00--.hashtable (362608 bytes)
+2023-03-08 18:41:11	End of local task; Time Taken: 1.318 sec.
+Execution completed successfully
+MapredLocal task succeeded
+Launching Job 1 out of 1
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Starting Job = job_1678310645599_0009, Tracking URL = http://bigdatamaster:8088/proxy/application_1678310645599_0009/
+Kill Command = /home/bigdata/hadoop/hadoop-2.7.1/bin/hadoop job  -kill job_1678310645599_0009
+Hadoop job information for Stage-2: number of mappers: 1; number of reducers: 1
+2023-03-08 18:41:18,927 Stage-2 map = 0%,  reduce = 0%
+2023-03-08 18:41:24,389 Stage-2 map = 100%,  reduce = 0%, Cumulative CPU 1.34 sec
+2023-03-08 18:41:29,737 Stage-2 map = 100%,  reduce = 100%, Cumulative CPU 2.25 sec
+MapReduce Total cumulative CPU time: 2 seconds 250 msec
+Ended Job = job_1678310645599_0009
+MapReduce Jobs Launched: 
+Stage-Stage-2: Map: 1  Reduce: 1   Cumulative CPU: 2.25 sec   HDFS Read: 3323008 HDFS Write: 3267 SUCCESS
+Total MapReduce CPU Time Spent: 2 seconds 250 msec
+OK
+100 Days Of Solitude	
+99 Songs (Tamil)	
+99 Songs (Telugu)	
+9to5: The Story of a Movement	
+A Family Affair	Tom Fassaert
+A new Capitalism	
+Adhugo	
+Alarmoty in the Land of Fire	
+Alias JJ, la celebridad del mal	
+Alien Contact: Outer Space	J. Michael Long
+Amy Schumer Growing	Amy Schumer
+Amy Schumer: The Leather Special	Amy Schumer
+Antoine Griezmann: The Making of a Legend	
+Aziz Ansari Live at Madison Square Garden	Aziz Ansari
+Beary Tales	
+Berlin, I Love You	
+Biggie & Tupac	Nick Broomfield
+Bo Burnham: Inside	Bo Burnham
+Breaking Free	Sridhar Rangayan
+Casino Tycoon	Wong Jing
+Chris Rock Total Blackout: The Tamborine Extended Cut	Chris Rock
+ChuChuTV Bedtime Stories & Moral Stories for Kids (English)	
+ChuChuTV Bedtime Stories & Moral Stories for Kids (Hindi)	
+ChuChuTV Surprise Eggs Learning Videos (English)	
+ChuChuTV Surprise Eggs Learning Videos (Hindi)	
+Creating The Queen's Gambit	
+Creating an Army of the Dead	
+Crip Camp: A Disability Revolution	
+Dare to Be Wild	
+Dave Chappelle: The Kennedy Center Mark Twain Prize for American Humor	
+Diana: In Her Own Words	
+Disclosure	
+Discovering Bigfoot	Todd Standing
+Elizabeth and Margaret: Love and Loyalty	
+Figaro Pho	Luke Jurevicius
+Follow Me	Asri Bendacha
+Free to Play	
+HOMECOMING: A film by Beyoncé	Beyoncé Knowles-Carter
+How to Stage a Coup	Cal Seville
+Into the Inferno	Werner Herzog
+John Was Trying to Contact Aliens	
+Judah Friedlander: America Is the Greatest Country in the United States	Judah Friedlander
+Keymon and Nani in Space Adventure	
+LA Originals	
+LEGO Marvel Super Heroes: Guardians of the Galaxy	
+LEGO Ninjago: Masters of Spinjitzu: Day of the Departed	
+La Gran Ilusión	Antonio Díaz
+Liberated: The New Sexual Revolution	
+Little Baby Bum: Go Buster	
+Little Singham: Legend of Dugabakka	
+Lo and Behold: Reveries of the Connected World	Werner Herzog
+Louis C.K. 2017	Louis C.K.
+Louis C.K.: Hilarious	Louis C.K.
+Louis C.K.: Live at the Comedy Store	Louis C.K.
+Maz Jobrani: Immigrant	Maz Jobrani
+Merata: How Mum Decolonised the Screen	Hepi Mita
+Murder to Mercy: The Cyntoia Brown Story	
+My Beautiful Broken Brain	Sophie Robinson, Lotje Sodderland
+My Own Man	David Sampliner
+Myriam Fares: The Journey	Myriam Fares
+Natalia Valdebenito: Gritona	Natalia Valdebenito
+Neal Brennan: 3 Mics	Neal Brennan
+Once in a Lifetime Sessions with George Ezra	
+Once in a Lifetime Sessions with OneRepublic	
+Otherhood	
+Oththa Seruppu Size 7	Parthiban
+Panoptic	Rana Eid
+Pedal the World	Felix Starck
+Polar	
+Real Crime: Supermarket Heist (Tesco Bomber)	
+Residente	René Pérez Joglar
+Rising Phoenix	
+Roberto Saviano: Writing Under Police Protection	Pierfrancesco Diliberto
+Roll With Me	
+Santo Cachón	
+Saudi Arabia Uncovered	
+Seven (Tamil)	
+Seven (Telugu)	
+Sisters on Track	
+Smash: Motorized Mayhem	
+Stars in the Sky: A Hunting Story	Steven Rinella
+Super Monsters: Dia de los Monsters	
+The Darkest Dawn	
+The Light of My Eyes	
+The Minimalists: Less Is Now	
+The Road to El Camino: Behind the Scenes of El Camino: A Breaking Bad Movie	
+Tig Notaro Happy To Be Here	Tig Notaro
+Trese After Dark	
+Vir Das: Outside In - The Lockdown Special	Vir Das
+Virunga: Gorillas in Peril	
+WHAT DID JACK DO?	David Lynch
+We Are All For The Fatherland	
+Wyatt Cenac: Brooklyn	Wyatt Cenac
+Yoo Byung Jae: Too Much Information	Yoo Byung-jae
+Time taken: 24.369 seconds, Fetched: 94 row(s)

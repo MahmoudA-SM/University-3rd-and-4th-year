@@ -1,0 +1,67 @@
+==19660== Memcheck, a memory error detector
+==19660== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==19660== Using Valgrind-3.15.0-608cb11914-20190413 and LibVEX; rerun with -h for copyright info
+==19660== Command: ./stringListTest
+==19660== Parent PID: 19659
+==19660== 
+--19660-- 
+--19660-- Valgrind options:
+--19660--    --tool=memcheck
+--19660--    --leak-check=full
+--19660--    --verbose
+--19660--    --log-file=logSLT.txt
+--19660-- Contents of /proc/version:
+--19660--   Linux version 3.10.0-1160.36.2.el7.x86_64 (mockbuild@kbuilder.bsys.centos.org) (gcc version 4.8.5 20150623 (Red Hat 4.8.5-44) (GCC) ) #1 SMP Wed Jul 21 11:57:15 UTC 2021
+--19660-- 
+--19660-- Arch and hwcaps: AMD64, LittleEndian, amd64-cx16-lzcnt-rdtscp-sse3-ssse3-avx-avx2-bmi-f16c-rdrand
+--19660-- Page sizes: currently 4096, max supported 4096
+--19660-- Valgrind library directory: /usr/libexec/valgrind
+--19660-- Reading syms from /home1/ugrads/mmoustaf/cs2263/Labs/Lab5/stringListTest
+--19660-- Reading syms from /usr/lib64/ld-2.17.so
+--19660-- Reading syms from /usr/libexec/valgrind/memcheck-amd64-linux
+--19660--    object doesn't have a symbol table
+--19660--    object doesn't have a dynamic symbol table
+--19660-- Scheduler: using generic scheduler lock implementation.
+--19660-- Reading suppressions file: /usr/libexec/valgrind/default.supp
+==19660== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-19660-by-mmoustaf-on-gc112m38.cs.unb.ca
+==19660== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-19660-by-mmoustaf-on-gc112m38.cs.unb.ca
+==19660== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-19660-by-mmoustaf-on-gc112m38.cs.unb.ca
+==19660== 
+==19660== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==19660== don't want to do, unless you know exactly what you're doing,
+==19660== or are doing some strange experiment):
+==19660==   /usr/libexec/valgrind/../../bin/vgdb --pid=19660 ...command...
+==19660== 
+==19660== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==19660==   /path/to/gdb ./stringListTest
+==19660== and then give GDB the following command
+==19660==   target remote | /usr/libexec/valgrind/../../bin/vgdb --pid=19660
+==19660== --pid is optional if only one valgrind process is running
+==19660== 
+--19660-- REDIR: 0x4019e40 (ld-linux-x86-64.so.2:strlen) redirected to 0x580c7ed5 (???)
+--19660-- REDIR: 0x4019c10 (ld-linux-x86-64.so.2:index) redirected to 0x580c7eef (???)
+--19660-- Reading syms from /usr/libexec/valgrind/vgpreload_core-amd64-linux.so
+--19660-- Reading syms from /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so
+==19660== WARNING: new redirection conflicts with existing -- ignoring it
+--19660--     old: 0x04019e40 (strlen              ) R-> (0000.0) 0x580c7ed5 ???
+--19660--     new: 0x04019e40 (strlen              ) R-> (2007.0) 0x04c2d1b0 strlen
+--19660-- REDIR: 0x4019dc0 (ld-linux-x86-64.so.2:strcmp) redirected to 0x4c2e300 (strcmp)
+--19660-- REDIR: 0x401aa80 (ld-linux-x86-64.so.2:mempcpy) redirected to 0x4c31f90 (mempcpy)
+--19660-- Reading syms from /usr/lib64/libc-2.17.so
+--19660-- REDIR: 0x4ec71c0 (libc.so.6:strcasecmp) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--19660-- REDIR: 0x4ec3f40 (libc.so.6:strnlen) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--19660-- REDIR: 0x4ec9490 (libc.so.6:strncasecmp) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--19660-- REDIR: 0x4ec69a0 (libc.so.6:memset) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--19660-- REDIR: 0x4ec6950 (libc.so.6:memcpy@GLIBC_2.2.5) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--19660-- REDIR: 0x4ec5930 (libc.so.6:__GI_strrchr) redirected to 0x4c2cb70 (__GI_strrchr)
+--19660-- REDIR: 0x4ebc740 (libc.so.6:malloc) redirected to 0x4c29eec (malloc)
+--19660-- REDIR: 0x4ec3e60 (libc.so.6:__GI_strlen) redirected to 0x4c2d110 (__GI_strlen)
+--19660-- REDIR: 0x4ebcb60 (libc.so.6:free) redirected to 0x4c2afe6 (free)
+==19660== 
+==19660== HEAP SUMMARY:
+==19660==     in use at exit: 0 bytes in 0 blocks
+==19660==   total heap usage: 1 allocs, 1 frees, 8 bytes allocated
+==19660== 
+==19660== All heap blocks were freed -- no leaks are possible
+==19660== 
+==19660== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

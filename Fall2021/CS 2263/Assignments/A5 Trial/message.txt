@@ -1,0 +1,245 @@
+Please do ask in comment if you face any difficulty !!!!
+
+Code implemented in C
+
+Note: Comments are written for code explanation
+
+Filename:  BusRoute.c
+
+#include "Point2D.h"
+#include "BusRoute.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+
+BusRoute* mallocBusRoute(int numStops)
+{
+        BusRoute* route = (BusRoute*)malloc(sizeof(BusRoute));
+        route->pList = *mallocPointList(numStops);
+        route->numStops = numStops;
+        return route;
+}
+
+void addPoint(BusRoute* route, Point2D point, int n)
+{
+        setElementPointList(&route->pList, point, n);
+}
+
+
+Point2D* getPoint(BusRoute* route, int n)
+{
+        Point2D* p = getElementPointList(&route->pList, n);
+        return p;
+}
+Filename:  BusRoute.h
+
+#ifndef BUSROUTE_H
+#define BUSROUTE_H
+
+#include <stdio.h>
+#include "Point2D.h"
+#include "PointList.h"
+
+typedef struct busroute 
+{
+        char* routeName;
+        PointList pList;
+        int numStops;
+} BusRoute;
+
+BusRoute* mallocBusRoute(int numStops);
+
+void addPoint(BusRoute* route, Point2D point, int n);
+
+Point2D* getPoint(BusRoute* route, int n);
+
+
+#endif
+Filename: Point2D.c
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include "Point2D.h"
+
+
+Point2D* mallocPoint2D(){
+        Point2D* pPtThis = (Point2D*) malloc(sizeof(Point2D) );
+        return pPtThis;
+}
+
+
+void freePoint2D(Point2D* pPtThis){
+        free(pPtThis);
+}
+
+Point2D* createPoint2D(double x, double y){
+        Point2D* pPtThis = mallocPoint2D();
+        if(pPtThis != (Point2D*)NULL ){
+                setPoint2D(pPtThis,x,y);
+        }
+        return pPtThis;
+}
+
+void setPoint2D(Point2D* pPtThis, double x, double y){
+        pPtThis->x = x;
+        pPtThis->y = y;
+}
+
+void setXPoint2D(Point2D* pPtThis, double x){
+        pPtThis->x = x;
+}
+
+double getYPoint2D(Point2D* pPtThis){
+        return pPtThis->y;
+}
+
+Point2D* fscanfPoint2D(FILE* pFIn){
+        Point2D* pPtThis;
+        double x;
+        double y;
+        int iNRead;
+        iNRead = fscanf(pFIn, "%lf %lf", &x, &y);
+        if(iNRead !=2 ) return (Point2D*)NULL;
+        pPtThis = createPoint2D(x, y);
+        return pPtThis;
+}
+
+double getDistancePoint2D( Point2D* pPtThis, Point2D* pPtThat){
+        double dX;
+        double dY;
+        double distance;
+        dX = pPtThis->x - pPtThat->x;
+        dY = pPtThis->y - pPtThat->y;
+        distance = sqrt(dX*dX + dY*dY);
+        return distance;
+}
+Filename:  Point2D.h
+
+#ifndef POINT2D_H
+#define POINT2D_H
+#include <stdio.h>
+#include <math.h>
+typedef struct point2d
+{
+        double x;
+        double y;
+
+} Point2D;
+
+Point2D* mallocPoint2D();
+
+
+void freePoint2D(Point2D* pPtThis);
+
+Point2D* createPoint2D(double x, double y);
+
+void setPoint2D(Point2D* pPtThis, double x, double y);
+
+void setXPoint2D(Point2D* pPtThis, double x);
+
+double getYPoint2D(Point2D* pPtThis);
+
+Point2D* fscanfPoint2D(FILE* pFin);
+
+double getDistancePoint2D( Point2D* ptThis, Point2D* pPtThat);
+
+#endif
+Filename:  PointList.c
+
+#include "Point2D.h"
+#include "PointList.h"
+#include <stdlib.h>
+#include <stdio.h>
+
+PointList* mallocPointList(int iNElements)
+{
+        PointList* pList = (PointList*)malloc(sizeof(PointList));
+        pList->pointList = (Point2D*)malloc(iNElements * sizeof(Point2D));
+        pList->length = iNElements;
+
+        for (int i=0; i < pList->length; i++) {
+                pList->pointList[i] = *mallocPoint2D();
+        }
+
+        return pList;
+}
+
+void freePointList(PointList* pList)
+{       
+        for (int i=0; i < pList->length; i++) {
+     free(&(pList->pointList[i]));
+        }
+
+        free(pList);
+}
+
+int setElementPointList(PointList* pList, Point2D point, int index)
+{
+
+  Point2D* p = createPoint2D(point.x, point.y);
+  pList->pointList[index] = *p;
+  return index;
+}
+
+Point2D* getElementPointList(PointList* pList, int index)
+{
+        return &pList->pointList[index];
+}
+Filename: PointList.h
+
+#include "Point2D.h"
+#include <stdlib.h>
+
+#ifndef POINTLIST_H
+#define POINTLIST_H
+
+typedef struct pointlist{
+        int length;
+        Point2D* pointList;
+} PointList;
+
+PointList* mallocPointList(int iNElements);
+
+void freePointList(PointList* pList);
+
+int setElementPointList(PointList* pList, Point2D point, int index);
+
+Point2D* getElementPointList(PointList* pList, int index);
+
+#endif
+Filename:  Student.c
+
+#include "Point2D.h"
+#include "Student.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+
+
+Student* createStudent(char* name, Point2D location)
+{
+        Student* stud = (Student*)malloc(sizeof(Student));
+        stud->name = name;
+        stud->location = location;
+        
+        return stud;
+}
+Filename:  Student.h
+
+#ifndef STUDENT_H
+#define STUDENT_H
+
+#include <stdio.h>
+#include "Point2D.h"
+
+typedef struct student
+{
+        char* name;
+        Point2D location;
+} Student;
+
+Student* createStudent(char* name, Point2D location);
+
+#endif
+Thank You !!!!

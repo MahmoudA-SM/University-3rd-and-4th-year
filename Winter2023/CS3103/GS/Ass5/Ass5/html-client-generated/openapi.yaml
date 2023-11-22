@@ -1,0 +1,343 @@
+openapi: 3.0.0
+info:
+  description: This is a present registry or management API
+  version: 1.0.0-oas3
+  title: Present Registry API
+  contact:
+    email: gsingh10@unb.ca
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+tags:
+  - name: Users
+    description: Registered Users access
+  - name: Present
+    description: Operations available to manage presents.
+paths:
+  /presents:
+    get:
+      tags:
+        - Present
+        - Users
+        
+      summary: searches all presents
+      operationId: searchPresents
+      description: |
+        Shows all the presents.
+      responses:
+        '200':
+          description: search results all the presents
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/present'
+        '400':
+          description: bad input parameter
+  /present :       
+    post:
+      tags:
+        - Present
+      summary: adds a present
+      operationId: addPresent
+      description: Adds a present to the database
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/present'
+        description: Present item to add
+      responses:
+        '201':
+          description: item created
+        '400':
+          description: invalid input, object invalid
+        '409':
+          description: an existing item already exists
+  
+  /present/{present_id}:
+    get:
+      tags:
+        - Present
+        - Users
+      summary : Returns the details of particular present
+      operationId: search present
+      parameters:
+        - name: present_id
+          in: path
+          description: present ID
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: returns a present object with given present id
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/present'
+        '404':
+          description: No present with this id found 
+        '401':
+          description: Data is invalid or missing.
+   
+    delete:
+      tags:
+        - Users
+        - Present
+      summary: delete a present associated with the presentId provided.
+      parameters:
+        - name: present_id
+          in: path
+          description: present ID
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: deletion was successful.
+        '404':
+          description: No present with particular present Id found 
+        
+        '401':
+          description: data is inavalid or missing.
+
+  /users :
+    get:
+      tags:
+        - Users
+      summary: searches all users
+      operationId: searchUsers
+      description: |
+        Shows all the Users.
+      responses:
+        '200':
+          description: search results all the presents
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/users'
+        '400':
+          description: bad input parameter
+  
+  /users/{user_id}:
+    get:
+      tags:
+        - Users
+      summary : Returns the details of particular User
+      operationId: search user
+      parameters:
+        - name: user_id
+          in: path
+          description: User ID
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: returns a User object with given User id
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/users'
+        '404':
+          description: No User with this id found 
+        '401':
+          description: Data is invalid or missing.
+    put:
+      tags:
+        - Users
+      operationId: Update User
+      
+      parameters:
+        - in: query
+          name: user
+          description: User object that needs to be updated
+          required: true
+          schema:
+            $ref: '#/components/schemas/users'
+        
+        - in: path
+          name: user_id
+          description: User Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "User not found"
+        "405":
+          description: "Validation exception"
+    delete:
+      tags:
+        - Users
+      summary: delete a User associated with the User Id providing username and password.
+      parameters:
+        - name: user_id
+          in: path
+          description: present ID
+          required: true
+          schema:
+            type: string
+        - name: username
+          in: query
+          description: username 
+          required: true
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: password 
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: deletion was successful.
+        '404':
+          description: No present with particular present Id found 
+        '400':
+          description: Invalid username/password.
+        '401':
+          description: data is inavalid or missing.
+  
+  /users/{user_id}/presents :
+    get:
+      tags:
+        - Users
+      summary : Returns the presents of particular User
+      operationId: search presents of a user
+      parameters:
+        - name: user_id
+          in: path
+          description: User ID
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: returns a presnt list of given User id.
+          content:
+            application/json:
+              schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/present'
+        '404':
+          description: No User with this id found 
+        '401':
+          description: Data is invalid or missing.
+  
+  /users/{user_id}/presents/{present_id} :
+    get:
+      tags:
+        - Users
+      summary: Gets the patrticular present for a given user.
+      parameters:
+        - in: path
+          name: user_id
+          description: Id of give User
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: present_id
+          description: Present Id to need.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: request ok.
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/present'
+        '404':
+          description: No present located with this present Id .
+        '400':
+          description: Invalid input, Bad request. No user present with this Id.
+  /user/login:
+    post:
+      tags:
+      - Users
+      summary: Logs user into the system
+      description: ""
+      operationId: loginUser
+      requestBody:
+        description: Giving user to login through web.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/signin'
+      responses:
+        '200':
+          description: successful login
+        '400':
+          description: Invalid username/password.
+      
+servers:
+  - url: https://cs3103.cs.unb.ca/gsingh10/A5
+components:
+  schemas:
+    users:
+      type: object
+      required:
+        - user_id
+        - user_name
+        - user_email
+      properties:
+        user_id:
+          type: string
+          example: u291891ee
+        user_name:
+          type: string
+          example: Rick Wightman
+        user_email:
+          type: string
+          example: 'myemail@gmail.com'
+        user_age:
+          type: integer
+    
+    signin:
+      type: object
+      required: 
+        - username
+        - password
+      properties:
+        username:
+          type: string 
+          example: gsinggh10
+        password:
+          type: string
+          example: mypassword
+    
+    present:
+      type: object
+      required:
+        - present_id
+        - present_name
+        - present_link
+      properties:
+        present_id:
+          type: string
+          example: p291891ee
+        present_name:
+          type: string
+          example: Hot wheels
+        present_description:
+          type: string
+          example: 'Toy cars to be played with.'
+        present_link:
+          type: string
+          format: url
+          example: 'https://www.amazon.ca/dp/B087QY6KMQ/ref=redir_mobile_desktop?_encoding=UTF8&aaxitk=20fc27bb19d698418d1127befbbd7eef&hsa_cr_id=9553559660301&pd_rd_plhdr=t&pd_rd_r=b11b4c3a-fd36-4331-ae1d-04e32c5b6d6d&pd_rd_w=DM8xw&pd_rd_wg=EMmyF&ref_=sbx_be_s_sparkle_mcd_asin_0_img'
+        present_image:
+          type: string
+          example: "img_002313.png"

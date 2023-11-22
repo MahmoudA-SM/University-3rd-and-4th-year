@@ -1,0 +1,20 @@
+public class InfoApp {
+	private static InfoPrintDoucette doucette = new InfoPrintDoucette();
+	private static InfoPrintDuman duman = new InfoPrintDuman();
+	public static void main(String[] args) {
+		System.out.println("01A Team 3 Member List: ");
+
+
+		doucette.printDoucette();
+		duman.printDuman();
+
+
+
+		InfoPrintDupuis idp = new InfoPrintDupuis();
+		idp.printDupuis();
+
+	}
+	
+	
+	
+}
